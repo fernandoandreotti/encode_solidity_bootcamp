@@ -20,6 +20,8 @@ Week 1 - Interact with HelloWorld
 | [0xcc1f038](https://goerli.etherscan.io/tx/0xf2ac13359bb77e763738e431d8821d6147d6c2e5dd74fbf1fad73274fd917e43) | 0xAf168C4c755771e46d24C7785909BA70C1e85218 (Joural) | Transfered ownership to 0x344C263Ae7575b58BCD313Fd6a517c8ca8872B3B |
 | [0xbe9fc82](https://goerli.etherscan.io/tx/0xbe9fc8260574c59f385b7ecab2a607711e1fbdd85ac864cb005ffcc6d311dfaa) | 0x52d51348509c059a177a8441fb0001ae7ef7346 (Leon) | Ran setText with value "Hey it's Leon" |
 | [0x1e8ce33](https://goerli.etherscan.io/tx/0x1e8ce338c5f4445071e80fb1e400613ca4f9e7fb0c1e8484d1f48baf10d42aa3) | 0x52d51348509c059a177a8441fb0001ae7ef7346 (Leon) | Transfered ownership to 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 (Ramiro)|
+| [0xb31d4a5](https://goerli.etherscan.io/tx/0xb31d4a557079e65529a2b95890cb54976afa480e8faef37ffff7f2d457e72e4a)         | 0x344c263ae7575b58bcd313fd6a517c8ca8872b3b (Yannick) | Ran setText with value "Let's rock!" |
+| [0x715ad41](https://goerli.etherscan.io/tx/0x715ad41ba4077e7f9c09354c01cccd9ff88ae969e225b366f8ba3f29327112d7) | 0x344c263ae7575b58bcd313fd6a517c8ca8872b3b (Yannick) | Transfered ownership to 0xf7479cbAd009CbaB44079b1c6EffB7d2769A6371 |
 
 
 **Accounts**:
