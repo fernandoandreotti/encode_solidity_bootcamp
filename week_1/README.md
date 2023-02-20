@@ -4,7 +4,7 @@ Week 1 - Interact with HelloWorld
 
 The link to the deployed contract is [here](https://goerli.etherscan.io/address/0xf743455e4899096fadca47f760714b2a15ef3091).
 
-Here is a descri
+Below are the description of the transactions as they occured through time:
 
 |Transaction      | From     | Explanation      |
 | :---            | :---:    |   :---:          |
