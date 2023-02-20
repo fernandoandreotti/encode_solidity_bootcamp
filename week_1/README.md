@@ -25,8 +25,7 @@ Below are the description of the transactions as they occured through time:
 | [0x8b3e3be](https://goerli.etherscan.io/tx/0x8b3e3beb45848d666ccbcfe6d3f9bbc76c4f9bade9ff5736251d3053af91f264) | 0x5E635441cAb460C3b126f7233419f143f87e404d (Marvin) | Ran setText with value "Let's go !" |
 | [0xa66e643](https://goerli.etherscan.io/tx/0xa66e643fa5e6756e2581d5044a737462d0202577873fcf3c0018d9417a66cb86) | 0x5E635441cAb460C3b126f7233419f143f87e404d (Marvin) | Transfered ownership to 0x52d51348509c059A177a8441fb0001AE7Ef73466 (Leon)|
 | [0xbe9fc82](https://goerli.etherscan.io/tx/0xbe9fc8260574c59f385b7ecab2a607711e1fbdd85ac864cb005ffcc6d311dfaa) | 0x52d51348509c059a177a8441fb0001ae7ef7346 (Leon) | Ran setText with value "Hey it's Leon" |
-| [0x1e8ce33](https://goerli.etherscan.io/tx/0x1e8ce338c5f4445071e80fb1e400613ca4f9e7fb0c1e8484d1f48baf10d42aa3) | 0x52d51348509c059a177a8441fb0001ae7ef7346 (Leon) | Transfered ownership to 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 |
-| [0x1e8ce33](https://goerli.etherscan.io/tx/0x1e8ce338c5f4445071e80fb1e400613ca4f9e7fb0c1e8484d1f48baf10d42aa3) | 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 (Ramiro) | Transfered ownership to 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 (himself) |
+| [0x1e8ce33](https://goerli.etherscan.io/tx/0x1e8ce338c5f4445071e80fb1e400613ca4f9e7fb0c1e8484d1f48baf10d42aa3) | 0x52d51348509c059a177a8441fb0001ae7ef7346 (Leon) | Transfered ownership to 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 (Ramiro) |
 | [0xcc1f038](https://goerli.etherscan.io/tx/0xcc1f0385e0cd08df74e9a0a7cd284c0fb644c9c7193f859b9320311fae51cc11) | 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 (Ramiro) | Ran setText with value "Hello from Ramiro" |
 | [0x4bbab5](https://goerli.etherscan.io/tx/0x4bbab5d08af4a95bb4a8a5d6c6c7a57abcfa1faaf856e1503061171611ce5281) | 0xc5Cd16eE48FA39960cd08b36dAB46CfEb1490C27 (Ramiro) | Transfered ownership to 0xAf168C4c755771e46d24C7785909BA70C1e85218 (Joural)  |
 | [0xe7a88b3](https://goerli.etherscan.io/tx/0xe7a88b34dc682d20e9fde760e2bd842a3559bc64f1ea2682f2429c5b9f6abfca) | 0xAf168C4c755771e46d24C7785909BA70C1e85218 (Joural) | Ran setText with value "life is great" |
@@ -38,9 +37,9 @@ Below are the description of the transactions as they occured through time:
 
 **Accounts**:
 - Fernando Andreotti - 0x7d519b2d27512dbb130ec4c9b997ef07a6ad9266
-- Marvin - 0x5E635441cAb460C3b126f7233419f143f87e404d
-- Ramiro Lopez - 0xc5cd16ee48fa39960cd08b36dab46cfeb1490c27
+- Marvin Roy - 0x5E635441cAb460C3b126f7233419f143f87e404d
+- Ramiro Lopez Cento - 0xc5cd16ee48fa39960cd08b36dab46cfeb1490c27
 - Joural - 0xAf168C4c755771e46d24C7785909BA70C1e85218
 - Leon Ducasse - 0x52d51348509c059A177a8441fb0001AE7Ef73466
-- Yannick J.- 0x344C263Ae7575b58BCD313Fd6a517c8ca8872B3B
-- Adam - 0xf7479cbAd009CbaB44079b1c6EffB7d2769A6371
+- Yannick Jen.- 0x344C263Ae7575b58BCD313Fd6a517c8ca8872B3B
+- Adam Power - 0xf7479cbAd009CbaB44079b1c6EffB7d2769A6371
