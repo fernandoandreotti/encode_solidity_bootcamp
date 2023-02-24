@@ -1,20 +1,7 @@
 import { ethers } from 'ethers'
 import * as dotenv from 'dotenv'
+import { Ballot__factory } from '../typechain-types';
 dotenv.config()
-
-const abi = [    {
-    "inputs": [],
-    "name": "winnerName",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "winnerName_",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  }];
 
 async function main() {
 
@@ -29,7 +16,7 @@ async function main() {
     const wallet = new ethers.Wallet(privateKey)
     const signer = wallet.connect(provider)
     
-    const contract = new ethers.Contract("Ballot", abi, signer);
+    const contract = new Ballot__factory(signer);
     console.log(`Attaching to ballot contract at address ${contractAddress} ...`)
     const deployedContract = contract.attach(contractAddress);
     console.log("Succesfully attached");
