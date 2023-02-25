@@ -38,7 +38,7 @@ Below are the description of the transactions as they occured through time:
 **Accounts**:
 - Fernando Andreotti - 0x7d519b2d27512dbb130ec4c9b997ef07a6ad9266
 - Marvin Roy - 0x5E635441cAb460C3b126f7233419f143f87e404d
-- Ramiro Lopez Cento - 0xc5cd16ee48fa39960cd08b36dab46cfeb1490c27
+- Ramiro Lopez Cento - 0x8E58a9aD55e4e9e5C387537097a6fF41504e4398
 - Loic B - 0xAf168C4c755771e46d24C7785909BA70C1e85218
 - Leon Ducasse - 0x52d51348509c059A177a8441fb0001AE7Ef73466
 - Yannick Jen.- 0x344C263Ae7575b58BCD313Fd6a517c8ca8872B3B
