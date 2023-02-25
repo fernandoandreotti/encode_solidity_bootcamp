@@ -5,7 +5,7 @@ Getting started
 -------------------
 
 1. Clone repo.
-2. Setup `.env`file with at least the `ALCHEMY_API_KEY` which is used to attach our wallets. 
+2. Setup `.env`file with at least the `ALCHEMY_API_KEY` and `PRIVATE_KEY` which are used to attach our contract. 
 ````
 MNEMONIC="here is where your twelve words mnemonic should be put my friend"
 PRIVATE_KEY="<your private key here if you don't have a mnemonic seed>"
