@@ -23,7 +23,8 @@ ETHERSCAN_API_KEY="********************************"
 The contract was deployed at the following address: `0x5fff9c7cbe4476b1981d54b90afab3d94da6ae05`
 
 The following scripts were added to interact with the contract:
-- `CastVote.ts` - for casting votes, provided rights are given
-- `DelegateVote.ts` - for user to delegate rights to other user
-- `GiveVoteRights.ts` - for enabling voting rights to user
-- `QueryResults.ts` - querying voting results
+- `CastVote.ts` - casts votes, provided rights are given
+- `DelegateVote.ts` - delegates voting rights to other user
+- `GiveVoteRights.ts` - enables voting rights to user
+- `QueryResults.ts` - queries voting results
+- `GetProposals.ts` - queries available options for voting on proposal.
