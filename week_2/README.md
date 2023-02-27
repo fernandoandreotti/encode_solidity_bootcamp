@@ -56,6 +56,10 @@ An other case is when we want to delegate our vote while not being the chairpers
 
 ![image](https://user-images.githubusercontent.com/92883939/221441872-6fbe4297-5880-4610-866b-cf8a00b7f6c5.png)
 
+Querying results:
+
+<img width="635" alt="Screenshot 2023-02-27 at 14 31 42" src="https://user-images.githubusercontent.com/69082711/221585745-c523fe84-e273-41de-acc3-530960cf7faa.png">
+
 Accounts:
 
     Fernando Andreotti - 0x7d519b2d27512dbb130ec4c9b997ef07a6ad9266
@@ -64,4 +68,3 @@ Accounts:
     Loic B - 0xAf168C4c755771e46d24C7785909BA70C1e85218
     Leon Ducasse - 0x52d51348509c059A177a8441fb0001AE7Ef73466
     Yannick Jen.- 0x344C263Ae7575b58BCD313Fd6a517c8ca8872B3B
-    Adam Power - 0xf7479cbAd009CbaB44079b1c6EffB7d2769A6371
