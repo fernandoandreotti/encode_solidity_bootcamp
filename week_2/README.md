@@ -55,3 +55,13 @@ Conditions have been added in the code; For instance, one cannot vote twice. An 
 An other case is when we want to delegate our vote while not being the chairperson; This is also not succesful:
 
 ![image](https://user-images.githubusercontent.com/92883939/221441872-6fbe4297-5880-4610-866b-cf8a00b7f6c5.png)
+
+Accounts:
+
+    Fernando Andreotti - 0x7d519b2d27512dbb130ec4c9b997ef07a6ad9266
+    Marvin Roy - 0x5E635441cAb460C3b126f7233419f143f87e404d
+    Ramiro Lopez Cento - 0x8E58a9aD55e4e9e5C387537097a6fF41504e4398
+    Loic B - 0xAf168C4c755771e46d24C7785909BA70C1e85218
+    Leon Ducasse - 0x52d51348509c059A177a8441fb0001AE7Ef73466
+    Yannick Jen.- 0x344C263Ae7575b58BCD313Fd6a517c8ca8872B3B
+    Adam Power - 0xf7479cbAd009CbaB44079b1c6EffB7d2769A6371
