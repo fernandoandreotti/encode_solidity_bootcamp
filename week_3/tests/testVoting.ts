@@ -56,7 +56,7 @@ describe("TokenizedBallot", function () {
       }
     });
     // Checks voting powers.
-    it("checks everyone's voting powers", async function () {
+    it("checks everyone's initial voting powers", async function () {
       // TODO
     });
   });
