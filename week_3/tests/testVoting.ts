@@ -39,7 +39,7 @@ describe("TokenizedBallot", function () {
     const [deployer, voter, voter2, voter3, attacker ] = await ethers.getSigners();
   });
 
-  describe("Once the contracts are deployed", function () {
+  describe("Once both contracts are deployed", function () {
     it("has the provided proposals", async function () {
       for (let index = 0; index < PROPOSALS.length; index++) {
         const proposal = await ballotContract.proposals(index);
