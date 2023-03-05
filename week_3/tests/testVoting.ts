@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { TokenizedBallot, MyToken__factory } from "../typechain-types";
+import { MyToken, TokenizedBallot } from "../typechain-types";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 const PROPOSALS = ["Proposal 1", "Proposal 2", "Proposal 3"];
@@ -15,8 +15,9 @@ function convertStringArrayToBytes32(array: string[]) {
 
 describe("TokenizedBallot", function () {
   let ballotContract: TokenizedBallot;
+  let myToken: MyToken;
   let deployer: SignerWithAddress
-  let voter: SignerWithAddress
+  let voter1: SignerWithAddress
   let voter2: SignerWithAddress
   let voter3: SignerWithAddress
   let attacker: SignerWithAddress
@@ -24,8 +25,8 @@ describe("TokenizedBallot", function () {
   beforeEach(async function () {
     // Deploy the Token contract
     const tokenFactory = await ethers.getContractFactory("MyToken");
-    const contract = await tokenFactory.deploy();
-    const deployedTokenTransactionReceipt = await contract.deployTransaction.wait();
+    myToken = await tokenFactory.deploy();
+    const deployedTokenTransactionReceipt = await myToken.deployTransaction.wait();
     console.log(`Deployed contract at address ${deployedTokenTransactionReceipt.contractAddress} and block ${deployedTokenTransactionReceipt.blockNumber}`)
 
     // Deploy Ballot contract
@@ -36,7 +37,7 @@ describe("TokenizedBallot", function () {
       deployedTokenTransactionReceipt.blockNumber
     );
     await ballotContract.deployed();
-    const [deployer, voter, voter2, voter3, attacker ] = await ethers.getSigners();
+    [deployer, voter1, voter2, voter3, attacker ] = await ethers.getSigners();
   });
 
   describe("Once both contracts are deployed", function () {
@@ -55,11 +56,38 @@ describe("TokenizedBallot", function () {
         expect(await proposal.voteCount).to.eq(0)
       }
     });
-    // Checks voting powers.
+
     it("checks everyone's initial voting powers", async function () {
-      // TODO
+      let arr_address = [deployer, voter1, voter2, voter3, attacker ];
+      for (var addr of arr_address) {
+        const votePowerAcc = await myToken.getVotes(addr.address);
+        expect(votePowerAcc).to.eq(0)
+      }
     });
   });
+
+  describe("checking voting powers after minting tokens", function () {
+    const MINT_VALUE = ethers.utils.parseEther("10");
+   
+    it("check voter1 initial balance", async function () {
+      const tokenBalanceVoter1Before = await myToken.balanceOf(voter1.address);
+      expect(tokenBalanceVoter1Before).to.eq(0)
+      });
+
+    it("check balance after minting", async function () {
+      const tokenBalanceVoter1Before = await myToken.balanceOf(voter1.address);
+      const mintTx = await myToken.mint(voter1.address, MINT_VALUE);
+      await mintTx.wait();
+      const tokenBalanceVoter1After = await myToken.balanceOf(voter1.address);
+      expect(tokenBalanceVoter1Before).to.eq(0)
+      expect(tokenBalanceVoter1After).to.eq(MINT_VALUE)
+
+    })
+  });
+
+
+
+
 
   // describe("when the voter interact with the vote function in the contract", function () {
   //   it("should register the vote", async () => {
