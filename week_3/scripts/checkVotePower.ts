@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import * as dotenv from 'dotenv';
-import { Ballot__factory, MyToken__factory } from "../typechain-types";
-import { BigNumber } from "ethers";
+import { MyToken__factory } from "../typechain-types";
+
 
 dotenv.config();
 
