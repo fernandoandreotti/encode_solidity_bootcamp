@@ -25,7 +25,7 @@ async function main(){
     console.log(`Attached to contract: ${tokenContractAddress}`);
 
     const getVotePower = await deployedContract.getVotes(checkVotePowerAddress);
-    console.log(`Account ${checkVotePowerAddress} has ${getVotePower} vote power units`);
+    console.log(`Account ${checkVotePowerAddress} has ${ethers.utils.formatEther(getVotePower)} vote power units`);
 
 }
 
