@@ -59,7 +59,7 @@ contract Ballot {
 
     // Gets voting power
     function votingPower(address account) public view returns (uint256) {
-        return tokenContract.getPastVotes(account, targetBlockNumber) - votingPowerSpent[account];;
+        return tokenContract.getPastVotes(account, targetBlockNumber) - votingPowerSpent[account];
     }
 
     /// @dev Computes the winning proposal taking all
