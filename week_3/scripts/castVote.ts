@@ -31,8 +31,9 @@ async function main() {
   The proposal vote is: ${proposalsNumber}
   The voting power is: ${votingPower}`)
   const voteTx = await ballotContract.vote(proposalsNumber, votingPower, {gasLimit: 100000});
-  const voteTxReceipt = voteTx.wait();
+  const voteTxReceipt = await voteTx.wait();
   console.log(voteTxReceipt);
+  console.log(`You have voted ${ votingPower } units for proposal number ${ proposalsNumber }`);
 }
 
 main().catch((error) => {
