@@ -9,7 +9,7 @@ interface IMyToken {
 
 
 
-contract TokenizedBallot {
+contract Ballot {
 
     // This is a type for a single proposal.
     struct Proposal {
