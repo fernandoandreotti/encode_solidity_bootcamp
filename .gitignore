@@ -382,4 +382,7 @@ artifacts/
 cache/
 typechain-types/
 yarn.lock
-
+# Others
+.vscode/
+.yarnrc.yml
+package-lock.json

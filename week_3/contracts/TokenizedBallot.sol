@@ -9,7 +9,7 @@ interface IMyToken {
 
 
 
-contract Ballot {
+contract TokenizedBallot {
 
     // This is a type for a single proposal.
     struct Proposal {
@@ -51,9 +51,6 @@ contract Ballot {
 
         // Account voteCount to the proposal
         proposals[proposal].voteCount += amount;
-
-        
-
     }
 
 

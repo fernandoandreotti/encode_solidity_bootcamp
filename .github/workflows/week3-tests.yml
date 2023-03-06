@@ -1,0 +1,33 @@
+name: ci_week3
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: week_3
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install packages
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - run: yarn --ignore-scripts
+        shell: bash
+      # - name: Create local node and deploy
+      #   run: |
+      #     yarn hardhat node &
+      #     yarn hardhat run scripts/deploy.ts --network localhost
+      - name: Install deps
+        run: yarn install
+      - name: Compile Contracts
+        run: yarn hardhat compile
+      - name: Run Tests
+        run: yarn hardhat test
