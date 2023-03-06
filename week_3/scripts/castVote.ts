@@ -33,7 +33,7 @@ async function main() {
   const voteTx = await ballotContract.vote(proposalsNumber, votingPower, {gasLimit: 100000});
   const voteTxReceipt = await voteTx.wait();
   console.log(voteTxReceipt);
-  console.log(`You have voted ${ votingPower } units for proposal number ${ proposalsNumber }`);
+  console.log(`You succesfully voted ${votingPower} units to proposal: ${ethers.utils.parseBytes32String(proposal.name)}, Number: ${proposalsNumber}`);
 }
 
 main().catch((error) => {
