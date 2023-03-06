@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { MyToken, TokenizedBallot } from "../typechain-types";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { BigNumber } from "ethers";
 
 const PROPOSALS = ["Proposal 1", "Proposal 2", "Proposal 3"];
 
@@ -15,29 +16,47 @@ function convertStringArrayToBytes32(array: string[]) {
 
 describe("TokenizedBallot", function () {
   let ballotContract: TokenizedBallot;
-  let myToken: MyToken;
+  let tokenContract: MyToken;
+  let blockNumber: uint256
   let deployer: SignerWithAddress
   let voter1: SignerWithAddress
   let voter2: SignerWithAddress
   let voter3: SignerWithAddress
   let attacker: SignerWithAddress
-
+  let MINT_VALUE: BigNumber
+  let tokenBalanceVoter1Before: BigNumber
+  let tokenBalanceVoter1After: BigNumber
+  let votePowerBefore: BigNumber
+  let votePowerAfter: BigNumber
+  
   beforeEach(async function () {
     // Deploy the Token contract
     const tokenFactory = await ethers.getContractFactory("MyToken");
-    myToken = await tokenFactory.deploy();
-    const deployedTokenTransactionReceipt = await myToken.deployTransaction.wait();
-    console.log(`Deployed contract at address ${deployedTokenTransactionReceipt.contractAddress} and block ${deployedTokenTransactionReceipt.blockNumber}`)
+    tokenContract = await tokenFactory.deploy();
+    const deployedTokenTransactionReceipt = await tokenContract.deployTransaction.wait();
+    blockNumber = deployedTokenTransactionReceipt.blockNumber
 
     // Deploy Ballot contract
     const ballotFactory = await ethers.getContractFactory("TokenizedBallot");
     ballotContract = await ballotFactory.deploy(
       convertStringArrayToBytes32(PROPOSALS),
       deployedTokenTransactionReceipt.contractAddress,
-      deployedTokenTransactionReceipt.blockNumber
+      deployedTokenTransactionReceipt.blockNumber + 3
     );
     await ballotContract.deployed();
     [deployer, voter1, voter2, voter3, attacker ] = await ethers.getSigners();
+
+    // Minting tokens for voter1
+    MINT_VALUE = ethers.utils.parseEther("10");
+    tokenBalanceVoter1Before = await tokenContract.balanceOf(voter1.address);
+    const mintTx = await tokenContract.mint(voter1.address, MINT_VALUE);
+    await mintTx.wait();
+    tokenBalanceVoter1After = await tokenContract.balanceOf(voter1.address);
+    votePowerBefore = await tokenContract.getVotes(voter1.address)
+    const delegateTx = await tokenContract.connect(voter1).delegate(voter1.address);
+    await delegateTx.wait();
+    votePowerAfter = await tokenContract.getVotes(voter1.address)
+
   });
 
   describe("Once both contracts are deployed", function () {
@@ -60,115 +79,102 @@ describe("TokenizedBallot", function () {
     it("checks everyone's initial voting powers", async function () {
       let arr_address = [deployer, voter1, voter2, voter3, attacker ];
       for (var addr of arr_address) {
-        const votePowerAcc = await myToken.getVotes(addr.address);
+        const votePowerAcc = await tokenContract.getPastVotes(addr.address, blockNumber );
         expect(votePowerAcc).to.eq(0)
       }
     });
   });
 
-  describe("checking voting powers after minting tokens", function () {
-    const MINT_VALUE = ethers.utils.parseEther("10");
-   
-    it("check voter1 initial balance", async function () {
-      const tokenBalanceVoter1Before = await myToken.balanceOf(voter1.address);
-      expect(tokenBalanceVoter1Before).to.eq(0)
+  describe("checking balances before/after minting tokens", function () {   
+    it("check voter1 initial balance", function () {
+        expect(tokenBalanceVoter1Before).to.eq(0)
       });
 
-    it("check balance after minting", async function () {
-      const tokenBalanceVoter1Before = await myToken.balanceOf(voter1.address);
-      const mintTx = await myToken.mint(voter1.address, MINT_VALUE);
-      await mintTx.wait();
-      const tokenBalanceVoter1After = await myToken.balanceOf(voter1.address);
-      expect(tokenBalanceVoter1Before).to.eq(0)
+    it("check balance for voter1 after minting", function () {
       expect(tokenBalanceVoter1After).to.eq(MINT_VALUE)
-
-    })
+    });
+  
   });
 
+  describe("checking voting power before/after self-delegating", function () {   
+    it("voting power for voter1 BEFORE self-delegating", function () {
+      expect(votePowerBefore).to.eq(0)
+    });
+
+    it("voting power for voter1 AFTER self-delegating", function () {
+      expect(votePowerAfter).to.eq(MINT_VALUE)
+    });
 
 
+  });
+
+  describe("attempting to vote", function () {   
+    it("voting with powers and amount should work", async function () {
+      const PROPOSAL_VOTE = 1
+      await ballotContract.connect(voter1).vote(PROPOSAL_VOTE, votePowerAfter);
+    });
+
+    it("voting with more powers than current have should revert", async function () {
+      expect(ballotContract.connect(voter1).vote(0, votePowerAfter.mul(2))).to.be.reverted;
+    });
+
+    it("voting without power should revert", async function () {
+      expect(ballotContract.connect(attacker).vote(0, votePowerAfter)).to.be.reverted;
+    })
+
+  });
+
+  describe("testing delegation", function () {   
+    it("delegation should work", async function () {
+      await tokenContract.connect(voter1).delegate(voter2.address);
+      const votePowerAfterDelegate = await tokenContract.getVotes(voter2.address)
+      expect(votePowerAfterDelegate).to.eq(votePowerAfter)
+    });
+
+    it("delegation should not work if not power is available", async function () {
+      await tokenContract.connect(attacker).delegate(voter2.address);
+      expect(tokenContract.getVotes(voter2.address)).to.be.reverted;
+    });
+
+  });
+
+  describe("interacting with winningProposal", function () {   
+    it("when someone interact with the winningProposal function before any votes are cast", async function () {
+      expect(await ballotContract.winningProposal()).to.eq(0)
+    });
+
+    it("when someone interact with the winningProposal function after one vote is cast for the first proposal", async function () {
+      await ballotContract.connect(voter1).vote(0, votePowerAfter);
+      expect(await ballotContract.connect(voter1).winningProposal()).to.eq(0)
+    });
+
+  });
+
+  describe("interact with the winnerName function", function () {
+     it("when someone interacts before any votes are cast, should return name of proposal 0", async () => {
+       const firstProposal = await ballotContract.proposals(0)
+       expect(await ballotContract.connect(voter1).winnerName()).to.eq(firstProposal.name)
+     });
 
 
-  // describe("when the voter interact with the vote function in the contract", function () {
-  //   it("should register the vote", async () => {
-  //     await ballotContract.giveRightToVote(voter.address);
-  //     await ballotContract.connect(voter).vote(1);
-  //     const voterInfo = await ballotContract.voters(voter.address)
-  //     expect(voterInfo.vote).to.eq(1)
-  //   });
-  // });
+     it("after vote for 0, should return name of proposal 0", async () => {
+      await ballotContract.connect(voter1).vote(0, votePowerAfter);
+       const firstProposal = await ballotContract.proposals(0)
+       expect(await ballotContract.winnerName()).to.eq(firstProposal.name)
+    });
 
-  // describe("when the voter interact with the delegate function in the contract", function () {
-  //   it("should transfer voting power", async () => {
-  //     await ballotContract.giveRightToVote(voter.address);
-  //     await ballotContract.connect(voter).delegate(deployer.address);
-  //     const deployerInfo = await ballotContract.voters(deployer.address);
-  //     expect(deployerInfo.weight).to.eq(2)
-  //   });
-  // });
+    it("after 5 random votes by voter 1, should return the name of the winner proposal", async () => {
+        for (let i = 0; i < 5; i++) { 
+          const tx = await ballotContract.connect(voter1).vote(Math.floor(Math.random()*(PROPOSALS.length)), votePowerAfter.div(5))
+          await tx.wait()
+        }
+        const winnerName = await ballotContract.winnerName();
+        console.log(`From winnerName: ${ethers.utils.parseBytes32String(winnerName)}`)
+        const winningProposal = await ballotContract.proposals(await ballotContract.winningProposal());
+        console.log(`From winningProposal: ${ethers.utils.parseBytes32String(winningProposal.name)}`)
+        expect(winnerName).to.eq(winningProposal.name)
+    });
+  });
 
-  // describe("when the an attacker interact with the giveRightToVote function in the contract", function () {
-  //   it("should revert", async () => {
-  //     await expect(ballotContract.connect(attacker).giveRightToVote(voter.address)).to.be.reverted
-  //   });
-  // });
-
-  // describe("when the an attacker interact with the vote function in the contract", function () {
-  //   it("should revert", async () => {
-  //     await expect(ballotContract.connect(attacker).vote(1)).to.be.reverted
-  //   });
-  // });
-
-  // describe("when the an attacker interact with the delegate function in the contract", function () {
-  //   it("should revert", async () => {
-  //     await expect(ballotContract.connect(attacker).delegate(voter.address)).to.be.reverted
-  //   });
-  // });
-
-  // describe("when someone interact with the winningProposal function before any votes are cast", function () {
-  //   it("should return 0", async () => {
-  //     expect(await ballotContract.winningProposal()).to.eq(0)
-  //   });
-  // });
-
-  // describe("when someone interact with the winningProposal function after one vote is cast for the first proposal", function () {
-  //   it("should return 0", async () => {
-  //     await ballotContract.vote(0);
-  //     expect(await ballotContract.connect(voter).winningProposal()).to.eq(0)
-  //   });
-  // });
-
-  // describe("when someone interact with the winnerName function before any votes are cast", function () {
-  //   it("should return name of proposal 0", async () => {
-  //     const firstProposal = await ballotContract.proposals(0)
-  //     expect(await ballotContract.connect(voter).winnerName()).to.eq(firstProposal.name)
-  //   });
-  // });
-
-  // describe("when someone interact with the winnerName function after one vote is cast for the first proposal", function () {
-  //   it("should return name of proposal 0", async () => {
-  //     await ballotContract.vote(0)
-  //     const firstProposal = await ballotContract.proposals(0)
-  //     expect(await ballotContract.winnerName()).to.eq(firstProposal.name)
-  //   });
-  // });
-
-  // describe("when someone interact with the winningProposal function and winnerName after 5 random votes are cast for the proposals", function () {
-  //   it("should return the name of the winner proposal", async () => {
-  //     const voters = [ deployer, voter, voter2, voter3, attacker ];
-  //     for (let i = 1; i < voters.length; i++) { 
-  //       const tx = await ballotContract.giveRightToVote(voters[i].address)
-  //       await tx.wait()
-  //     }
-  //     for (const voter of voters) { 
-  //       const tx = await ballotContract.connect(voter).vote(Math.floor(Math.random()*(PROPOSALS.length)))
-  //       await tx.wait()
-  //     }
-  //     const winnerName = await ballotContract.winnerName();
-  //     console.log(`From winnerName: ${ethers.utils.parseBytes32String(winnerName)}`)
-  //     const winningProposal = await ballotContract.proposals(await ballotContract.winningProposal());
-  //     console.log(`From winningProposal: ${ethers.utils.parseBytes32String(winningProposal.name)}`)
-  //     expect(winnerName).to.eq(winningProposal.name)
-  //   });
-  // });
 });
+
