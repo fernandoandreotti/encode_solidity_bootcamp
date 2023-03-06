@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { MyToken, TokenizedBallot } from "../typechain-types";
+import { MyToken, Ballot } from "../typechain-types";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers";
 
@@ -15,7 +15,7 @@ function convertStringArrayToBytes32(array: string[]) {
 }
 
 describe("TokenizedBallot", function () {
-  let ballotContract: TokenizedBallot;
+  let ballotContract: Ballot;
   let tokenContract: MyToken;
   let blockNumber: uint256
   let deployer: SignerWithAddress
@@ -37,7 +37,7 @@ describe("TokenizedBallot", function () {
     blockNumber = deployedTokenTransactionReceipt.blockNumber
 
     // Deploy Ballot contract
-    const ballotFactory = await ethers.getContractFactory("TokenizedBallot");
+    const ballotFactory = await ethers.getContractFactory("Ballot");
     ballotContract = await ballotFactory.deploy(
       convertStringArrayToBytes32(PROPOSALS),
       deployedTokenTransactionReceipt.contractAddress,
