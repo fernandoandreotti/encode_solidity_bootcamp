@@ -18,8 +18,8 @@ ETHERSCAN_API_KEY="********************************"
 1. Install repo using `yarn install`
 2. Compile the contract with `yarn hardhat compile`
 
-The token contract was deployed at the following address: `0x63840a264045f5F87eC18dB64353990D67b225c7` (https://goerli.etherscan.io/txs?a=0x63840a264045f5F87eC18dB64353990D67b225c7](https://goerli.etherscan.io/address/0x63840a264045f5F87eC18dB64353990D67b225c7)
-
+The token contract was deployed at the following address: `0x63840a264045f5F87eC18dB64353990D67b225c7` 
+(https://goerli.etherscan.io/address/0x63840a264045f5F87eC18dB64353990D67b225c7)
 The ballot contract was deployed at the following address: `0x103cdc03325c0F6C53CC2C1030816a89e3aF079F` (https://goerli.etherscan.io/address/0x103cdc03325c0f6c53cc2c1030816a89e3af079f)
 
 
