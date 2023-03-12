@@ -32,7 +32,7 @@ export class AppController {
   }
 
   @Post("/request-tokens")
-  requestTokens(@Body() body: RequestTokensDTO): void {
-    this.appService.requestTokens(body.address, body.amount);
+  async requestTokens(@Body() body: RequestTokensDTO): Promise<void> {
+    await this.appService.requestTokens(body.address, body.amount);
   }
 }
