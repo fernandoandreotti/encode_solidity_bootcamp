@@ -35,4 +35,9 @@ export class AppController {
   requestTokens(@Body() body: RequestTokensDTO): void {
     this.appService.requestTokens(body.address, body.amount);
   }
+
+  @Get("/votes")
+  getVotes(): string[] {
+    return this.appService.getVotes();
+  }
 }
