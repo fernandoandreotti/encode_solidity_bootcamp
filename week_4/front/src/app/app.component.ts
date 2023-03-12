@@ -70,7 +70,7 @@ export class AppComponent {
     return this.http.get<{ address: string }>(`${API_URL}/contract-address`);
   }
 
-  requestTokens(amount: number) {
+  requestTokens(amount: string) {
     const body = { address: this.userWallet?.address, amount: amount };
     this.http
       .post<{ result: string }>(API_URL_MIN, body)
