@@ -1,10 +1,12 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders  } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { BigNumber, ethers, Wallet } from "ethers";
+import { BigNumber, Contract, ethers, Wallet } from "ethers";
 import tokenJson from "../assets/MyToken.json";
+import ballotJson from "../assets/Ballot.json"
 
 const API_URL = "http://localhost:3000";
-const API_URL_MIN = "http://localhost:3000/request-tokens";
+const API_URL_MINT = "http://localhost:3000/request-tokens";
+const API_URL_CASTVOTE = "http://localhost:3000/cast-vote";
 
 @Component({
   selector: "app-root",
@@ -28,6 +30,11 @@ export class AppComponent {
   totalSupply: number | string | undefined;
   winningProposal: string | undefined | Promise<string> | any;
 
+  ballotContractAddress: string | undefined;
+  ballotContract: ethers.Contract | undefined;
+
+  winningProposal: string | undefined | Promise<string> | any;
+
   constructor(private http: HttpClient) {
     this.provider = ethers.getDefaultProvider("goerli");
   }
@@ -45,7 +52,6 @@ export class AppComponent {
     this.getBallotAddress().subscribe((response) => {
       this.ballotContractAddress = response.address;
     });
-  
   }
 
   updateTokenInfo() {
@@ -85,7 +91,7 @@ export class AppComponent {
   requestTokens(amount: string) {
     const body = { address: this.userWallet?.address, amount: amount };
     this.http
-      .post<{ result: string }>(API_URL_MIN, body)
+      .post<{ result: string }>(API_URL_MINT, body)
       .subscribe((response) => {
         console.log(
           "Requested " +
@@ -95,6 +101,21 @@ export class AppComponent {
         );
         console.log("Tx hash: " + response);
       });
+  }
+
+  castVote(proposal: string, votes: string){
+    const body = {proposal : proposal, votes: votes}
+    this.http
+        .post<{ result: string }> (API_URL_CASTVOTE, body)
+        .subscribe((result) => {
+          console.log(
+            "Proposal :" +
+            proposal +
+            " Votes: " +
+            votes
+          );
+          console.log('TX hash'+ result.result)
+        });
   }
 
   getWinningProposal(){

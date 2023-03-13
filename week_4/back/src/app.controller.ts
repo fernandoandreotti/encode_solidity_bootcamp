@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CastVoteDTO } from './dtos/castVoteDTO';
 import { RequestTokensDTO } from './dtos/RequestTokensDTO';
 
 @Controller()
@@ -36,7 +37,12 @@ export class AppController {
     return await this.appService.getTransactionStatus(hash);
   }
 
-  @Post("request-tokens")
+  @Get("winning-proposal")
+  async getWinningProposal(): Promise<string> {
+    return await this.appService.getWinningProposal();
+  }
+
+  @Post("/request-tokens")
   requestTokens(@Body() body: RequestTokensDTO): void {
     this.appService.requestTokens(body.address, body.amount);
   }
@@ -46,8 +52,9 @@ export class AppController {
     return this.appService.getVotes();
   }
 
-  @Get("winning-proposal")
-  async getWinningProposal(): Promise<string> {
-    return await this.appService.getWinningProposal();
+
+  @Post("/cast-vote")
+  castVote(@Body() body: CastVoteDTO): Promise<string>{
+    return this.appService.castVote(body.proposal,body.votes);
   }
 }
