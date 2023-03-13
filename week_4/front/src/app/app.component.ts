@@ -30,11 +30,6 @@ export class AppComponent {
   totalSupply: number | string | undefined;
   winningProposal: string | undefined | Promise<string> | any;
 
-  ballotContractAddress: string | undefined;
-  ballotContract: ethers.Contract | undefined;
-
-  winningProposal: string | undefined | Promise<string> | any;
-
   constructor(private http: HttpClient) {
     this.provider = ethers.getDefaultProvider("goerli");
   }
