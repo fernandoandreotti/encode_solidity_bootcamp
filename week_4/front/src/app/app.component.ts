@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { BigNumber, ethers, Wallet } from "ethers";
 import tokenJson from "../assets/MyToken.json";
@@ -22,7 +22,11 @@ export class AppComponent {
   tokenContractAddress: string | undefined;
   tokenContract: ethers.Contract | undefined;
 
+  ballotContractAddress: string | undefined;
+  ballotContract: ethers.Contract | undefined;
+
   totalSupply: number | string | undefined;
+  winningProposal: string | undefined | Promise<string> | any;
 
   constructor(private http: HttpClient) {
     this.provider = ethers.getDefaultProvider("goerli");
@@ -38,6 +42,10 @@ export class AppComponent {
       this.tokenContractAddress = response.address;
       this.updateTokenInfo();
     });
+    this.getBallotAddress().subscribe((response) => {
+      this.ballotContractAddress = response.address;
+    });
+  
   }
 
   updateTokenInfo() {
@@ -70,6 +78,10 @@ export class AppComponent {
     return this.http.get<{ address: string }>(`${API_URL}/contract-address`);
   }
 
+  getBallotAddress() {
+    return this.http.get<{ address: string }>(`${API_URL}/ballot-contract-address`);
+  }
+
   requestTokens(amount: string) {
     const body = { address: this.userWallet?.address, amount: amount };
     this.http
@@ -83,5 +95,20 @@ export class AppComponent {
         );
         console.log("Tx hash: " + response);
       });
+  }
+
+  getWinningProposal(){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'text/plain, */*',
+        'Content-Type': 'application/json'
+      }),
+      responseType: 'text' as 'json' 
+    };
+
+    this.http.get<Promise<string>>(`${API_URL}/winning-proposal`, httpOptions).subscribe((response) => {
+      this.winningProposal = response.toString();
+      console.log("response ===> " + this.winningProposal);
+    });
   }
 }

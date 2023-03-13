@@ -11,6 +11,11 @@ export class AppController {
     return { address: this.appService.getContractAddress() };
   }
 
+  @Get("ballot-contract-address")
+  getcontractBallotAddress(): {address: string}{
+    return { address: this.appService.getContractBallotAddress() };
+  }
+
   @Get("total-supply")
   async getTotalSupply(): Promise<number> {
     return await this.appService.getTotalSupply();
@@ -39,5 +44,10 @@ export class AppController {
   @Get("votes")
   getVotes(): string[] {
     return this.appService.getVotes();
+  }
+
+  @Get("winning-proposal")
+  async getWinningProposal(): Promise<string> {
+    return await this.appService.getWinningProposal();
   }
 }
