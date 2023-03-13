@@ -22,7 +22,7 @@
           <p class="card-text">Balance: {{ userEthBalance }} ETH</p>
           <p class="card-text">Balance: {{ userEthBalance }} MTK</p>
           <input
-            #amount
+            #mintAmount
             type="number"
             min="0"
             max="10"
@@ -33,7 +33,7 @@
           <button
             type="button"
             class="btn btn-success btn-lg px-4 gap-3 my-4"
-            (click)="requestTokens(amount.value)"
+            (click)="requestTokens(mintAmount.value)"
           >
             Request Tokens
           </button>
