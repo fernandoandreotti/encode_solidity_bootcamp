@@ -42,9 +42,9 @@ export class AppController {
     return await this.appService.getWinningProposal();
   }
 
-  @Post("/request-tokens")
-  requestTokens(@Body() body: RequestTokensDTO): void {
-    this.appService.requestTokens(body.address, body.amount);
+  @Post("request-tokens")
+    async requestTokens(@Body() body: RequestTokensDTO): Promise<void> {
+    await this.appService.requestTokens(body.address, body.amount);
   }
 
   @Get("votes")

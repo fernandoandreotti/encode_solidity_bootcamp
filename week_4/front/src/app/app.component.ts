@@ -19,7 +19,7 @@ export class AppComponent {
 
   userEthBalance: number | undefined;
   userWallet: Wallet | undefined;
-  userTokenBalance: number | undefined;
+  userTokenBalance: string | number | undefined;
 
   tokenContractAddress: string | undefined;
   tokenContract: ethers.Contract | undefined;
@@ -83,19 +83,29 @@ export class AppComponent {
     return this.http.get<{ address: string }>(`${API_URL}/ballot-contract-address`);
   }
 
-  requestTokens(amount: string) {
-    const body = { address: this.userWallet?.address, amount: amount };
-    this.http
-      .post<{ result: string }>(API_URL_MINT, body)
-      .subscribe((response) => {
-        console.log(
-          "Requested " +
-            amount +
-            " tokens for address " +
-            this.userWallet?.address
-        );
-        console.log("Tx hash: " + response);
-      });
+  async updateTokenBalance(){
+    if(! this.tokenContractAddress) return;
+    this.tokenContract = new Contract(
+      this.tokenContractAddress,
+      tokenJson.abi,
+      this.userWallet ?? this.provider
+    );
+
+   this.tokenContract['balanceOf'](this.userWallet?.address).then((balance:any) =>{
+    console.log('token balance is '+ balance)
+    this.userTokenBalance = balance;
+    });
+  }
+
+  requestTokens(amount:string){
+    this.userTokenBalance = "minting..."
+    const body = {address:this.userWallet?.address,amount:amount};
+    console.log('Requested ' + amount + ' tokens for address '+ this.userWallet?.address);
+    return this.http.post<{result:string}>(API_URL_MINT,body).subscribe((result) =>{
+      console.log('tx hash ' + result.result);
+      this.updateTokenBalance();
+    })
+    //console.log('TODO request tokens from backend passing address')
   }
 
   castVote(proposal: string, votes: string){
