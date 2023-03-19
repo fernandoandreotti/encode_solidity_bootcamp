@@ -8,6 +8,7 @@ import { mainnet, goerli, polygon, arbitrum } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { ConnectWalletBtn } from './components/ConnectWalletBtn';
+import Home from './index'
  
 const { chains, provider } = configureChains(
   [mainnet, goerli, polygon, arbitrum],
@@ -33,6 +34,8 @@ export default function App({ Component, pageProps }) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <ConnectWalletBtn />
+        <br/>
+        <Home />
       </RainbowKitProvider>
     </WagmiConfig>
   )
