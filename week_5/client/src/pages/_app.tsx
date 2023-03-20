@@ -43,7 +43,11 @@ export default function MyApp(props: AppProps) {
 
   const { Component, pageProps } = props;
   const { address, isConnected } = useAccount()
-  
+  const account = useAccount({
+    onConnect({ address, connector, isReconnected }) {
+      console.log('Connected', { address, connector, isReconnected })
+    },
+  })
 
   return (
 
@@ -60,7 +64,7 @@ export default function MyApp(props: AppProps) {
                <ConnectWalletBtn />
              </div>
                <h1 style={{ fontWeight: 'bold', fontSize: '4rem', textAlign: 'center', marginTop: '4rem', marginBottom: '2rem' }}>Lottery dApp</h1>
-             {!isConnected ? (
+             {account.isDisconnected ? (
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <p style={{ fontSize: '2rem'}}> Please  <strong> connect</strong> your wallet</p> 
               </div>
