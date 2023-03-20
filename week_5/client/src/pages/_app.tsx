@@ -53,18 +53,18 @@ export default function MyApp(props: AppProps) {
         <RainbowKitProvider chains={chains}>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
-          <div style={{ position: 'absolute', top: 8, left: 20 }}>
+           <div style={{ position: 'absolute', top: 8, left: 20 }}>
               <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Team 10</p>
-           </div>
-            <div style={{ position: 'absolute', top: 20, right: 20 }}>
-              <ConnectWalletBtn />
             </div>
-              <h1 style={{ fontWeight: 'bold', fontSize: '4rem', textAlign: 'center', marginTop: '4rem', marginBottom: '2rem' }}>Lottery dApp</h1>
-            {!isConnected ? (
+             <div style={{ position: 'absolute', top: 10, right: 20 }}>
+               <ConnectWalletBtn />
+             </div>
+               <h1 style={{ fontWeight: 'bold', fontSize: '4rem', textAlign: 'center', marginTop: '4rem', marginBottom: '2rem' }}>Lottery dApp</h1>
+             {!isConnected ? (
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <p style={{ fontSize: '2rem'}}> Please  <strong> connect</strong> your wallet</p> 
               </div>
-            ) : (
+             ) : (
               <div>
                <Component {...pageProps}/>
               </div>
