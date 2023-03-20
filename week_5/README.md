@@ -18,4 +18,6 @@ To run the frontend:
   - `yarn install` within `client/` folder
   - `yarn dev` to initiate frontent.
 
+Here is a screenshot of the frontend:
 
+![Screenshot from 2023-03-20 19-00-09](https://user-images.githubusercontent.com/7779437/226427448-6df8fed8-7ed1-4c76-bb38-914a1bb7ce5e.png)
