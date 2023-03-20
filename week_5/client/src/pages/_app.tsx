@@ -17,6 +17,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Home from './index'
  
 const { chains, provider } = configureChains(
   [mainnet, goerli, polygon, arbitrum],
@@ -45,6 +46,7 @@ export default function MyApp(props: AppProps) {
   
 
   return (
+
     <Container>
       <CssBaseline />
       <WagmiConfig client={wagmiClient}>
@@ -69,4 +71,5 @@ export default function MyApp(props: AppProps) {
   </Container>
   
   );
+
 }
