@@ -10,19 +10,14 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { ConnectWalletBtn } from './components/ConnectWalletBtn';
 import * as React from 'react';
-import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Home from './index'
  
 const { chains, provider } = configureChains(
   [mainnet, goerli, polygon, arbitrum],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
+    alchemyProvider({ apiKey: process.env.ALCHEMY_ID! }),
     publicProvider()
   ]
 );
