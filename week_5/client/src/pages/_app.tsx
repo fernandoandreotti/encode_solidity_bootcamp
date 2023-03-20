@@ -50,7 +50,7 @@ export default function MyApp(props: AppProps) {
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div style={{ position: 'absolute', top: 0, right: 0 }}>
+            <div style={{ position: 'absolute', top: 8, right: 8 }}>
               <ConnectWalletBtn />
             </div>
             <h1 style={{ fontWeight: 'bold', fontSize: '4rem', textAlign: 'center', marginTop: '4rem' }}>Lottery dApp</h1>
