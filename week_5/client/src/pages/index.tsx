@@ -28,7 +28,7 @@ export default function Home() {
         const contractABI = lotteryJson.abi;
         const tokenAddress = "0xC649c3e09C16Fb4267e7B012083c53f3BaB4672d";
         const tokenABI = tokenJson.abi;
-        provider = new ethers.providers.Web3Provider(ethereum);
+        provider = new ethers.providers.Web3Provider(ethereum as any);
         setTimestamp((await provider.getBlock('latest')).timestamp);
         const signer = provider.getSigner();
         setSignerAddress(await signer.getAddress())
